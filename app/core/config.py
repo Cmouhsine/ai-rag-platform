@@ -11,6 +11,11 @@ class Settings(BaseSettings):
     postgres_user: str
     postgres_password: str
 
+    # JWT
+    secret_key: str
+    algorithm: str
+    access_token_expire_minutes: int
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",
