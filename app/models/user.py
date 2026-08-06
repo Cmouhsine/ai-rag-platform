@@ -5,6 +5,7 @@ from sqlalchemy import DateTime
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import relationship
 
 from app.database.base import Base
 from sqlalchemy import func
@@ -47,3 +48,9 @@ class User(Base):
         server_default=func.now(),
         onupdate=func.now(),
     )
+    documents = relationship(
+    "Document",
+    back_populates="owner",
+    cascade="all, delete-orphan",
+)
+    
