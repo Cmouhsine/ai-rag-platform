@@ -5,7 +5,9 @@ from pathlib import Path
 from fastapi import UploadFile
 
 from app.models.document import Document
+from app.rag.loader import PDFLoader
 from app.repositories.document_repository import DocumentRepository
+
 
 UPLOAD_DIRECTORY = Path("data/uploads")
 
@@ -22,6 +24,7 @@ class DocumentService:
         repository: DocumentRepository,
     ):
         self.repository = repository
+        self.loader = PDFLoader()
 
     def upload_document(
         self,
@@ -49,18 +52,20 @@ class DocumentService:
             )
 
         document = Document(
-
             filename=unique_filename,
-
             original_filename=file.filename,
-
             content_type=file.content_type,
-
             path=str(destination),
-
             owner_id=owner_id,
-
             status="UPLOADED",
         )
 
-        return self.repository.create(document)
+        document = self.repository.create(document)
+
+        extracted_text = self.loader.load(document.path)
+
+        print("=" * 80)
+        print(extracted_text[:500])
+        print("=" * 80)
+
+        return document
