@@ -7,7 +7,7 @@ from fastapi import UploadFile
 from app.models.document import Document
 from app.rag.loader import PDFLoader
 from app.repositories.document_repository import DocumentRepository
-
+from app.rag.chunker import TextChunker
 
 UPLOAD_DIRECTORY = Path("data/uploads")
 
@@ -25,6 +25,7 @@ class DocumentService:
     ):
         self.repository = repository
         self.loader = PDFLoader()
+        self.chunker = TextChunker()
 
     def upload_document(
         self,
@@ -64,8 +65,17 @@ class DocumentService:
 
         extracted_text = self.loader.load(document.path)
 
+        chunks = self.chunker.split(extracted_text)
+        
         print("=" * 80)
-        print(extracted_text[:500])
+        print(f"Document : {document.original_filename}")
+        print(f"Characters : {len(extracted_text)}")
+        print(f"Chunks : {len(chunks)}")
         print("=" * 80)
-
+        
+        for index, chunk in enumerate(chunks[:3]):
+            print(f"\n----- Chunk {index + 1} -----\n")
+            print(chunk)
+        
         return document
+    

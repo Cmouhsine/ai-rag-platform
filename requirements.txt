@@ -18,3 +18,4 @@ httpx
 
 python-dotenv
 pypdf
+langchain-text-splitters
