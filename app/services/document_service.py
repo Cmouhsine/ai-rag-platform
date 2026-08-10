@@ -8,6 +8,7 @@ from app.models.document import Document
 from app.rag.loader import PDFLoader
 from app.repositories.document_repository import DocumentRepository
 from app.rag.chunker import TextChunker
+from app.rag.embeddings import EmbeddingService
 
 UPLOAD_DIRECTORY = Path("data/uploads")
 
@@ -26,6 +27,7 @@ class DocumentService:
         self.repository = repository
         self.loader = PDFLoader()
         self.chunker = TextChunker()
+        self.embedding_service = EmbeddingService()
 
     def upload_document(
         self,
@@ -67,15 +69,17 @@ class DocumentService:
 
         chunks = self.chunker.split(extracted_text)
         
+        embeddings = self.embedding_service.embed_documents(
+            chunks
+        )
+        
         print("=" * 80)
         print(f"Document : {document.original_filename}")
         print(f"Characters : {len(extracted_text)}")
         print(f"Chunks : {len(chunks)}")
+        print(f"Embeddings : {len(embeddings)}")
+        print(f"Embedding dimension : {len(embeddings[0])}")
         print("=" * 80)
-        
-        for index, chunk in enumerate(chunks[:3]):
-            print(f"\n----- Chunk {index + 1} -----\n")
-            print(chunk)
         
         return document
     
