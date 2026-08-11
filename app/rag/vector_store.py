@@ -39,5 +39,15 @@ class VectorStore:
             metadatas=metadatas,
         )
 
+    def search(
+        self,
+        query_embedding: list[float],
+        top_k: int = 5,
+    ):
+        return self.collection.query(
+            query_embeddings=[query_embedding],
+            n_results=top_k,
+        )
+
     def count(self) -> int:
         return self.collection.count()

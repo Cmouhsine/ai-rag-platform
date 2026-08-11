@@ -9,6 +9,7 @@ from app.database.database import get_db
 from app.repositories.document_repository import DocumentRepository
 from app.schemas.document import DocumentResponse
 from app.services.document_service import DocumentService
+from app.rag.retriever import Retriever
 
 router = APIRouter(
     prefix="/documents",
@@ -50,3 +51,15 @@ def get_documents(
     repository = DocumentRepository(db)
 
     return repository.list()
+
+@router.get("/search")
+def search_documents(
+    query: str,
+    top_k: int = 5,
+):
+    retriever = Retriever()
+
+    return retriever.retrieve(
+        query=query,
+        top_k=top_k,
+    )
