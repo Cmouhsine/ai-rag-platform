@@ -5,7 +5,11 @@ from pathlib import Path
 from fastapi import UploadFile
 
 from app.models.document import Document
+from app.rag.loader import PDFLoader
 from app.repositories.document_repository import DocumentRepository
+from app.rag.chunker import TextChunker
+from app.rag.embeddings import EmbeddingService
+from app.rag.vector_store import VectorStore
 
 UPLOAD_DIRECTORY = Path("data/uploads")
 
@@ -22,6 +26,10 @@ class DocumentService:
         repository: DocumentRepository,
     ):
         self.repository = repository
+        self.loader = PDFLoader()
+        self.chunker = TextChunker()
+        self.embedding_service = EmbeddingService()
+        self.vector_store = VectorStore()
 
     def upload_document(
         self,
@@ -49,18 +57,37 @@ class DocumentService:
             )
 
         document = Document(
-
             filename=unique_filename,
-
             original_filename=file.filename,
-
             content_type=file.content_type,
-
             path=str(destination),
-
             owner_id=owner_id,
-
             status="UPLOADED",
         )
 
-        return self.repository.create(document)
+        document = self.repository.create(document)
+
+        extracted_text = self.loader.load(document.path)
+
+        chunks = self.chunker.split(extracted_text)
+        
+        embeddings = self.embedding_service.embed_documents(
+            chunks
+        )
+        self.vector_store.add_documents(
+        document_id=document.id,
+        chunks=chunks,
+        embeddings=embeddings,
+        )
+        
+        print("=" * 80)
+        print(f"Document : {document.original_filename}")
+        print(f"Characters : {len(extracted_text)}")
+        print(f"Chunks : {len(chunks)}")
+        print(f"Embeddings : {len(embeddings)}")
+        print(f"Embedding dimension : {len(embeddings[0])}")
+        print(f"Vector count : {self.vector_store.count()}")
+        print("=" * 80)
+        
+        return document
+    

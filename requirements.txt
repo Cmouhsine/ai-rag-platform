@@ -1,19 +1,32 @@
 fastapi
 uvicorn
+
 sqlalchemy
 psycopg2-binary
 alembic
+
 pydantic
 pydantic-settings
+python-dotenv
 
 python-jose
 passlib[bcrypt]
-
-python-multipart
 bcrypt==4.0.1
 
-pytest
+python-multipart
 
+pytest
 httpx
 
-python-dotenv
+pypdf
+langchain-text-splitters
+
+numpy==1.26.4
+scipy==1.13.1
+scikit-learn==1.5.2
+
+torch==2.2.2
+transformers==4.41.2
+sentence-transformers==3.0.1
+
+chromadb
