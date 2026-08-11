@@ -9,6 +9,7 @@ from app.rag.loader import PDFLoader
 from app.repositories.document_repository import DocumentRepository
 from app.rag.chunker import TextChunker
 from app.rag.embeddings import EmbeddingService
+from app.rag.vector_store import VectorStore
 
 UPLOAD_DIRECTORY = Path("data/uploads")
 
@@ -28,6 +29,7 @@ class DocumentService:
         self.loader = PDFLoader()
         self.chunker = TextChunker()
         self.embedding_service = EmbeddingService()
+        self.vector_store = VectorStore()
 
     def upload_document(
         self,
@@ -72,6 +74,11 @@ class DocumentService:
         embeddings = self.embedding_service.embed_documents(
             chunks
         )
+        self.vector_store.add_documents(
+        document_id=document.id,
+        chunks=chunks,
+        embeddings=embeddings,
+        )
         
         print("=" * 80)
         print(f"Document : {document.original_filename}")
@@ -79,6 +86,7 @@ class DocumentService:
         print(f"Chunks : {len(chunks)}")
         print(f"Embeddings : {len(embeddings)}")
         print(f"Embedding dimension : {len(embeddings[0])}")
+        print(f"Vector count : {self.vector_store.count()}")
         print("=" * 80)
         
         return document
