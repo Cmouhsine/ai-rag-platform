@@ -1,0 +1,34 @@
+[
+  {
+    "question": "What is the purpose of this document?",
+    "generated_answer": "Je n'ai pas suffisamment d'informations pour déterminer le but précis de ce document. Cependant, en analysant le contenu, il semble qu'il s'agisse d'un curriculum vitae (CV) ou d'un portfolio professionnel, qui présente les compétences, les expériences professionnelles et les formations de l'auteur, Mouhsine Chrinbou.",
+    "keyword_score": 0.0,
+    "retrieval_score": 0.3723697819196075,
+    "overall_score": 0.148947912767843,
+    "retrieved_chunks": 5
+  },
+  {
+    "question": "What are the main responsibilities described in the document?",
+    "generated_answer": "Les principales responsabilités décrites dans le document incluent :\n\n1. Concevoir des composants logiciels respectant les principes RESTFULL, SOLID, l'indépendance des services, et l'évolutivité.\n2. Définir les modèles de données et le contrat d'interface, en assurant la cohérence avec les systèmes existants.\n3. Implémenter les Endpoints REST, basé sur un Framework C++.\n4. Gérer la sérialisation et désérialisation des objets échangés.\n5. Mettre en place des tests unitaires et des tests d'intégration pour la couverture et le traitement des remontés sonar.\n6. Implémenter la publication et la consommation de messages dans Kafka.\n7. Implémenter un mécanisme de notification via WebSocket.\n8. Écrire et maintenir des scripts SQL pour gérer la persistance des données.\n9. Développer des scripts Shell pour automatiser certaines tâches (tests, intégration).\n10. Gérer la configuration : Git, Gitlab CI.\n11. Gérer le build et les dépendances via conan et cmake.\n\nCes responsabilités sont décrites dans le contexte d'une mission au sein de l'entreprise ENEDIS, où le développeur doit concevoir et développer des composants logiciels pour des applications complexes.",
+    "keyword_score": 0.0,
+    "retrieval_score": 0.38328896785048167,
+    "overall_score": 0.15331558714019267,
+    "retrieved_chunks": 5
+  },
+  {
+    "question": "What are the main requirements?",
+    "generated_answer": "I don't have enough information to determine the main requirements based on the provided context. The context only provides information about the developer's experience, skills, and professional experience, but it does not mention any specific requirements.",
+    "keyword_score": 1.0,
+    "retrieval_score": 0.41979230714591353,
+    "overall_score": 0.7679169228583654,
+    "retrieved_chunks": 5
+  },
+  {
+    "question": "What are Mouhsine Chrinbou's main technical skills?",
+    "generated_answer": "Mouhsine Chrinbou's main technical skills are:\n\n- C, C++, Python\n- Linux, Unix, Windows, FreeRTOS\n- REST APIs, Kafka, WebSockets\n- MySQL, PostgreSQL\n- Git, Jenkins, GitLab CI, Docker, Kubernetes, CMake, Conan\n- STM32, ESP32, Raspberry Pi",
+    "keyword_score": 0.6666666666666666,
+    "retrieval_score": 0.4259429008360519,
+    "overall_score": 0.5703771603344208,
+    "retrieved_chunks": 5
+  }
+]

@@ -1,7 +1,7 @@
+from typing import Optional
 from app.rag.embeddings import EmbeddingService
 from app.rag.vector_store import VectorStore
-
-
+ 
 class Retriever:
 
     def __init__(self):
@@ -12,6 +12,7 @@ class Retriever:
         self,
         query: str,
         top_k: int = 5,
+        document_id: Optional[int] = None,
     ) -> list[dict]:
 
         query_embedding = (
@@ -22,6 +23,7 @@ class Retriever:
         results = self.vector_store.search(
             query_embedding=query_embedding,
             top_k=top_k,
+            document_id=document_id,
         )
 
         documents = results.get("documents", [[]])[0]
@@ -37,3 +39,4 @@ class Retriever:
             for content, metadata, distance
             in zip(documents, metadatas, distances)
         ]
+
