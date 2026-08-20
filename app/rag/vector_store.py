@@ -43,10 +43,19 @@ class VectorStore:
         self,
         query_embedding: list[float],
         top_k: int = 5,
+        document_id: int | None = None,
     ):
+        where = None
+    
+        if document_id is not None:
+            where = {
+                "document_id": document_id
+            }
+    
         return self.collection.query(
             query_embeddings=[query_embedding],
             n_results=top_k,
+            where=where,
         )
 
     def count(self) -> int:

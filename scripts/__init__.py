@@ -1,0 +1,1 @@
+python -m scripts.evaluate_rag
